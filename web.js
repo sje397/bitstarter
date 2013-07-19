@@ -1,11 +1,13 @@
 var express = require('express'),
-    fs = require('fs');
+    fs = require('fs'),
+    path = require('path');
 
 var app = express.createServer(express.logger());
-var text = fs.readFileSync('index.html').toString();
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(request, response) {
-  response.send(text);
+  response.sendfile('index.html', {root: __dirname});
 });
 
 var port = process.env.PORT || 8080; 
